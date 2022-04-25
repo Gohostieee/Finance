@@ -52,11 +52,12 @@ driver.execute_script("document.body.style.zoom='5%'")
 time.sleep(2)
 #main scraper
 def main_scraper():
+    timeYMD = datetime.today().strftime('%Y-%m-%d')
     global driver
     #get the html off the website
     page = driver.execute_script('return document.body.innerHTML')
     #list of words not desired when I scrape the information out
-    nonoWords=('#','Name','Price','24h %','7d %','Market Cap','Volume(24h)','Circulating Supply', 'Last 7 Days','')
+    nonoWords=('#','Name','Price','24h %','7d %','Market Cap','Volume(24h)','Circulating Supply', 'Last 7 Days','nigger')
 
     rowdy=[]
     counter=0
@@ -87,15 +88,18 @@ def main_scraper():
                 except:
                     #a bunch of counter checks in order to see where in the data we currently are and taking steps in order to format it appropiately
                     if counter==0:
+                        print(y)
                         for q in y:
                             if q.isdigit():
                                 digit=str(q)
-                                print(q)
+                                print(q,"for the macy")
+                                rowdy.append(y.split(digit)[0])
+
                                 break
 
-                        print(y.split(q)[0],'go home')
+                            print(y.split(q)[0],'go home')
+
                         counter+=1
-                        rowdy.append(y.split(q)[0])
                     elif counter in range(1,4):
                         #take every single string and what ever the number is replace any rouge characters with nothing so that we can convert it into a int type variable instead of a string
 
@@ -137,7 +141,7 @@ def main_scraper():
                             except:
                                 #in some conditions the previous statement will throw an error and instead of saying insert we should say update/set
                                 print(rowdy[0],'Corn')
-                                mycursor.execute('UPDATE coinPriceData SET price=%s,dailyRate=%s,weeklyRate=%s,marketCap=%s,dailyVolume=%s,circulatingSupply=%s,date=%s,time=%s WHERE name=%s ', (rowdy[1],rowdy[2],rowdy[3],rowdy[4],rowdy[5],rowdy[6],datetime.today().strftime('%Y-%m-%d'),datetime.today().strftime('%H:%M:%S'),rowdy[0]))
+                                mycursor.execute('UPDATE coinPriceData SET price=%s,dailyRate=%s,weeklyRate=%s,marketCap=%s,dailyVolume=%s,circulatingSupply=%s,date=%s,time=%s WHERE name=%s ', (rowdy[1],rowdy[2],rowdy[3],rowdy[4],rowdy[5],rowdy[6],timeYMD,datetime.today().strftime('%H:%M:%S'),rowdy[0]))
                                 #mycursor.execute('INSERT INTO Coinbbbb(name,price,dailyRate,weeklyRate,marketCap,dailyVolume,circulatingSupply,date,time) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)', (rowdy[0],rowdy[1],rowdy[2],rowdy[3],rowdy[4],rowdy[5],rowdy[6],datetime.today().strftime('%Y-%m-%d'),datetime.today().strftime('%H:%M:%S')))
                                 db.commit()
 
