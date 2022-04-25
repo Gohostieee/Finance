@@ -14,5 +14,6 @@ connection = mysql.connector.connect(user=dbKeys["user"],password=dbKeys["passwo
 
 cursor = connection.cursor()
 
-cursor.execute('CREATE TABLE coinPriceData (name VARCHAR(50) PRIMARY KEY, price float, dailyRate float, weeklyRate float,marketCap BIGINT,dailyVolume float, circulatingSupply float, date VARCHAR(50), time VARCHAR(50))')
-connection.commit()
+cursor.execute('select * from coinPriceData')
+for x in cursor.fetchall():
+	print(x)
