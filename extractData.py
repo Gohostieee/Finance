@@ -42,6 +42,8 @@ mycursor = None
 #create the tables if non existant//should create a way to check if they exist//however at the time I was not taking the translation of this code into another database in mind
 opts = Options()
 opts.add_argument(" --headless")
+opts.add_argument('--no-sandbox')
+opts.add_argument('--disable-dev-shm-usage')
 #enter the desired url//due to the nature of coinmarketcap and the way it was created dynamically this scraper might not work with other services
 item = str('https://coinmarketcap.com/homepage-v21/')
 #initialize the virtual browser
