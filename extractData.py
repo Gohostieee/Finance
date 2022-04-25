@@ -44,7 +44,7 @@ opts = Options()
 opts.add_argument(" --headless")
 opts.add_argument('--no-sandbox')
 opts.add_argument('--disable-dev-shm-usage')
-o.add_argument('--user-data-dir=/')
+opts.add_argument('--user-data-dir=/')
 #enter the desired url//due to the nature of coinmarketcap and the way it was created dynamically this scraper might not work with other services
 item = str('https://coinmarketcap.com/homepage-v21/')
 #initialize the virtual browser
