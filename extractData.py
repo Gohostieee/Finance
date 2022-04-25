@@ -59,7 +59,11 @@ driver.execute_script("document.body.style.zoom='5%'")
 time.sleep(2)
 #main scraper
 def main_scraper():
+    print("wha")
     timeYMD = datetime.today().strftime('%Y-%m-%d')
+    timeHMS = datetime.today().strftime('%H:%M:%S')
+    print("wha")
+
     global driver
     #get the html off the website
     page = driver.execute_script('return document.body.innerHTML')
@@ -71,8 +75,12 @@ def main_scraper():
     soup = BeautifulSoup(''.join(driver.page_source), 'html.parser')
     shenanigans=dict()
     itemss=0
+    print("wha")
+
     #iterate through every single "tr" element inside the html//this is where these are all coins are stored
     for x in soup.find_all('tr'):
+        print("whaevs")
+
         #print(len(x))
         #print(x[0])
 
@@ -142,7 +150,7 @@ def main_scraper():
                             try:
                                 print(rowdy[0],'Corn')
                                 #insert the data into a table inside of sql by using the integrated %s method instead of the insecure string formatting
-                                mycursor.execute('INSERT INTO coinPriceData(name,price,dailyRate,weeklyRate,marketCap,dailyVolume,circulatingSupply,date,time) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)', (rowdy[0],rowdy[1],rowdy[2],rowdy[3],rowdy[4],rowdy[5],rowdy[6],datetime.today().strftime('%Y-%m-%d'),datetime.today().strftime('%H:%M:%S')))
+                                mycursor.execute('INSERT INTO coinPriceData(name,price,dailyRate,weeklyRate,marketCap,dailyVolume,circulatingSupply,date,time) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)', (rowdy[0],rowdy[1],rowdy[2],rowdy[3],rowdy[4],rowdy[5],rowdy[6],timeYMD,timeHMS))
                                 #commit the changes
                                 db.commit()
                             except:
