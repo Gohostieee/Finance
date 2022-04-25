@@ -58,13 +58,13 @@ print("huh")
 driver.execute_script("document.body.style.zoom='5%'")
 time.sleep(2)
 #main scraper
-def main_scraper():
+def main_scraper(driver):
     print("wha")
     timeYMD = datetime.today().strftime('%Y-%m-%d')
     timeHMS = datetime.today().strftime('%H:%M:%S')
     print("wha")
 
-    global driver
+    
     #get the html off the website
     print("wha")
 
@@ -77,7 +77,7 @@ def main_scraper():
     rowdy=[]
     counter=0
     print("wha")
-    
+
     soup = BeautifulSoup(''.join(driver.page_source), 'html.parser')
     shenanigans=dict()
     itemss=0
@@ -174,5 +174,5 @@ def main_scraper():
 if __name__=="__main__":
     while True:
         database_connect(usr=dbKeys["user"],passwrd=dbKeys["password"],hst=dbKeys["host"],dtbs=dbKeys["dbName"])
-        main_scraper()
+        main_scraper(driver)
         time.sleep(600)
