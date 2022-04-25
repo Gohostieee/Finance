@@ -9,6 +9,7 @@ import itertools
 import mysql.connector
 from datetime import datetime
 from webdriver_manager.chrome import ChromeDriverManager
+import os
 from dotenv import load_dotenv, find_dotenv
 #start the database//change according to your own credentials
 def database_connect(hst,usr,passwrd,dtbs):
@@ -128,13 +129,13 @@ def main_scraper():
                             try:
                                 print(rowdy[0],'Corn')
                                 #insert the data into a table inside of sql by using the integrated %s method instead of the insecure string formatting
-                                mycursor.execute('INSERT INTO Coinnnnnn(name,price,dailyRate,weeklyRate,marketCap,dailyVolume,circulatingSupply,date,time) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)', (rowdy[0],rowdy[1],rowdy[2],rowdy[3],rowdy[4],rowdy[5],rowdy[6],datetime.today().strftime('%Y-%m-%d'),datetime.today().strftime('%H:%M:%S')))
+                                mycursor.execute('INSERT INTO coinPriceData(name,price,dailyRate,weeklyRate,marketCap,dailyVolume,circulatingSupply,date,time) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)', (rowdy[0],rowdy[1],rowdy[2],rowdy[3],rowdy[4],rowdy[5],rowdy[6],datetime.today().strftime('%Y-%m-%d'),datetime.today().strftime('%H:%M:%S')))
                                 #commit the changes
                                 db.commit()
                             except:
                                 #in some conditions the previous statement will throw an error and instead of saying insert we should say update/set
                                 print(rowdy[0],'Corn')
-                                mycursor.execute('UPDATE Coinnnnnn SET price=%s,dailyRate=%s,weeklyRate=%s,marketCap=%s,dailyVolume=%s,circulatingSupply=%s,date=%s,time=%s WHERE name=%s ', (rowdy[1],rowdy[2],rowdy[3],rowdy[4],rowdy[5],rowdy[6],datetime.today().strftime('%Y-%m-%d'),datetime.today().strftime('%H:%M:%S'),rowdy[0]))
+                                mycursor.execute('UPDATE coinPriceData SET price=%s,dailyRate=%s,weeklyRate=%s,marketCap=%s,dailyVolume=%s,circulatingSupply=%s,date=%s,time=%s WHERE name=%s ', (rowdy[1],rowdy[2],rowdy[3],rowdy[4],rowdy[5],rowdy[6],datetime.today().strftime('%Y-%m-%d'),datetime.today().strftime('%H:%M:%S'),rowdy[0]))
                                 #mycursor.execute('INSERT INTO Coinbbbb(name,price,dailyRate,weeklyRate,marketCap,dailyVolume,circulatingSupply,date,time) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)', (rowdy[0],rowdy[1],rowdy[2],rowdy[3],rowdy[4],rowdy[5],rowdy[6],datetime.today().strftime('%Y-%m-%d'),datetime.today().strftime('%H:%M:%S')))
                                 db.commit()
 
@@ -149,4 +150,4 @@ if __name__=="__main__":
     while True:
         database_connect(usr=dbKeys["user"],passwd=dbKeys["password"],hst=dbKeys["host"],database=dbKeys["dbName"])
         main_scraper()
-        time.sleep(10)
+        time.sleep(600)
