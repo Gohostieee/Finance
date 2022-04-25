@@ -45,7 +45,7 @@ opts.add_argument(" --headless")
 #enter the desired url//due to the nature of coinmarketcap and the way it was created dynamically this scraper might not work with other services
 item = str('https://coinmarketcap.com/homepage-v21/')
 #initialize the virtual browser
-driver  = webdriver.Chrome(ChromeDriverManager().install())
+driver  = webdriver.Chrome("/usr/bin/chromedriver")
 driver.get(item)
 #zoom out in order to load all of the content
 driver.execute_script("document.body.style.zoom='5%'")
@@ -141,7 +141,7 @@ def main_scraper():
                             except:
                                 #in some conditions the previous statement will throw an error and instead of saying insert we should say update/set
                                 print(rowdy[0],'Corn')
-                                mycursor.execute('UPDATE coinPriceData SET price=%s,dailyRate=%s,weeklyRate=%s,marketCap=%s,dailyVolume=%s,circulatingSupply=%s,date=%s,time=%s WHERE name=%s ', (rowdy[1],rowdy[2],rowdy[3],rowdy[4],rowdy[5],rowdy[6],timeYMD,datetime.today().strftime('%H:%M:%S'),rowdy[0]))
+                                mycursor.execute('UPDATE coinPriceData SET price=%s,dailyRate=%s,weeklyRate=%s,marketCap=%s,dailyVolume=%s,circulatingSupply=%s,date=%s,time=%s WHERE name=%s ', (rowdy[1],rowdy[2],rowdy[3],rowdy[4],rowdy[5],rowdy[6],timeYMD,timeHMS,rowdy[0]))
                                 #mycursor.execute('INSERT INTO Coinbbbb(name,price,dailyRate,weeklyRate,marketCap,dailyVolume,circulatingSupply,date,time) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)', (rowdy[0],rowdy[1],rowdy[2],rowdy[3],rowdy[4],rowdy[5],rowdy[6],datetime.today().strftime('%Y-%m-%d'),datetime.today().strftime('%H:%M:%S')))
                                 db.commit()
 
