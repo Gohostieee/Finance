@@ -66,12 +66,18 @@ def main_scraper():
 
     global driver
     #get the html off the website
+    print("wha")
+
     page = driver.execute_script('return document.body.innerHTML')
+    print("wha")
+
     #list of words not desired when I scrape the information out
     nonoWords=('#','Name','Price','24h %','7d %','Market Cap','Volume(24h)','Circulating Supply', 'Last 7 Days','nigger')
 
     rowdy=[]
     counter=0
+    print("wha")
+    
     soup = BeautifulSoup(''.join(driver.page_source), 'html.parser')
     shenanigans=dict()
     itemss=0
