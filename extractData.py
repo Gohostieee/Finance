@@ -47,7 +47,7 @@ opts.add_argument('--disable-dev-shm-usage')
 #enter the desired url//due to the nature of coinmarketcap and the way it was created dynamically this scraper might not work with other services
 item = str('https://coinmarketcap.com/homepage-v21/')
 #initialize the virtual browser
-driver  = webdriver.Chrome(ChromeDriverManager().install())
+driver  = webdriver.Chrome("/user/bin/chromedriver", options = opts)
 driver.get(item)
 #zoom out in order to load all of the content
 driver.execute_script("document.body.style.zoom='5%'")
