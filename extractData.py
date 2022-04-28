@@ -150,7 +150,7 @@ def main_scraper(driver):
                                 #after all of this the data will be properly formated and printed out in a neatly matter ready to be inserted into our database
                                 print(rowdy)
                         print(rowdy,'cavendish')
-                        #print('cavish',len(rowdy))
+                          #print('cavish',len(rowdy))
                         counter+=1
                         if counter==7:
                             try:
