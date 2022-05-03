@@ -1,3 +1,9 @@
 # Specify filepatterns you want git to ignore.
-/node_modules
-.zip
+/nodeServer/node_modules
+/packages
+/include
+*.zip
+*.env
+/layer
+/pyServer/ENV_DIR
+/pyServer/__pycache__
