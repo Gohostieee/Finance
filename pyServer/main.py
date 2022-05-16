@@ -3,7 +3,7 @@ from flask import request
 import mysql.connector
 from dotenv import load_dotenv, find_dotenv
 import os,json
-from apiFunc import _dateRange,listIntoSqlQuery,dateFormatter,stringIntoList
+from apiFunc import _dateRange,listIntoSqlQuery,dateFormatter,stringIntoList,getNameDateQuery,getNameDatePriceQuery,extractDatePrice
 from mysql.connector.constants import ClientFlag
 
 
@@ -26,7 +26,7 @@ def welcome():
 @app.route('/api', methods=['GET', 'POST'])
 def apiRequest():
 
-    apikey = request.args.get('apiKey')
+    apikey = request.args.get('apikey')
     print(apikey)
     cursor.execute("select * from apiKeys where apiKey = (%s)",(apikey,))
 
@@ -36,23 +36,36 @@ def apiRequest():
         query = request.args.get('query')
         match query:
             case "interdaily":
-                start = request.args.get('start')
-                end = request.args.get('end')
-                nameRange = tuple(stringIntoList(request.args.get('names'),","))
-                dateRange = tuple([x for x in _dateRange(start,end)])
-                queryStringDates = ','.join(['%s'] * len(dateRange))
-                queryStringNames = ','.join(['%s'] * len(nameRange))
-                totalRange =  dateRange + nameRange 
-                queryString= f"select * from coinPriceData where   date in ({queryStringDates}) and name in ({queryStringNames}) "
-               # print("select * from coinPriceData where   date in (%s) and name in  ",dateRange)
-                print(cursor.execute(queryString,totalRange))
-                print(cursor.statement)
+                queryString = getNameDateQuery(request)
+                print(cursor.execute(queryString[2],queryString[1]+queryString[0]))
                 return {'response':cursor.fetchall()}
+            case "lowtohigh":
+                """queryString = getNameDatePriceQuery(request)
+                print(cursor.execute(queryString[2],queryString[1]+queryString[0]))
+                priceHighLow = [[x for x in cursor.fetchall()],[]]
+                currDate = [[priceHighLow[0][0][2],priceHighLow[0][0][2]],'',0,0]
+                currDate[1]=priceHighLow[0][0][1]
+                for x in priceHighLow[0]:
+                    if x[1] != currDate[1]:
+                        priceHighLow[1].append([x[0],currDate[1],[currDate[0][0], currDate[0][1]]])
+                        print(currDate, "what")
+                        currDate[0][0]=x[2]
+                        currDate[0][1]=x[2]
+                        currDate[1]=x[1]
+                    if x[2]<currDate[0][0]:
+                        print(currDate,x)
+
+                        currDate[0][0]=x[2]
+                    elif x[2]>currDate[0][1]:
+                        currDate[0][1]=x[2]
+"""
+                return extractDatePrice(request,cursor)
             case default:
                 return {'response':'RON you moronic new nigga'}
     else:
         print("failed")
-    return {"response":keyCheck}
+
+        return {"response":"key " + keyCheck + " failed"}
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=105)
