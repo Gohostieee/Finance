@@ -175,4 +175,4 @@ if __name__=="__main__":
     while True:
         database_connect(usr=dbKeys["user"],passwrd=dbKeys["password"],hst=dbKeys["host"],dtbs=dbKeys["dbName"])
         main_scraper(driver)
-        time.sleep(600)
+        time.sleep(60)
